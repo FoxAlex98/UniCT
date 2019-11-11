@@ -1,0 +1,1 @@
+Questa cartella contiene gli esercizi svolti della parte di algoritmi del cms

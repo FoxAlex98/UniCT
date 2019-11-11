@@ -1,0 +1,53 @@
+Comando per visualizzare l'interfaccia:
+ifconfig
+ifconfig -a (visualizza tutte le interfacce)
+abilitare una scheda di rete:
+sudo ifconfig [nome interfaccia] up es: sudo ifconfig enp0s3 up
+
+Comandi ipv4:
+modificare indirizzo ipv4 :
+sudo ifconfig nome interfaccia [indirizzo ip]/[maschera] es: sudo ifconfig enp0s3 1.1.1.1/24
+
+visualizzare tabelle di routing:
+route
+
+aggiungere record nella tabella di route:
+sudo route add -net indirizzo sottorete(finisce.0) netmask [...] e gw[....]. es: sudo route add -net 1.1.1.0/24 gw 1.1.2.1
+
+abilitare il forward :
+sudo sysctl -w net.ipv4.ip_forward=1
+
+Comandi ipv6:
+Configuare indirizzo ipv6 :
+sudo ifconfig [nomeinterfaccia] inet6 add [indirizzoip]/[maschera] es: sudo ifconfig enp0s3 inet6 add 2::1/64
+
+visualizzare tabelle di routing :
+route --inet6
+
+abilitare il forward :
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+aggiungere record tabelle di route :
+sudo route -A inet6 add [indirizzo ipv6] gw[indirizzo gw] es: sudo route -A inet6 add 3::0/64 gw 2::1
+
+E' inoltre possibile modificare gli indirizzi ip modificando il file presente nella directory 
+sudo vi /etc/network/interface
+
+modificare il file nel seguente modo: // i valori sono solo di esempio 
+auto enp0s3
+iface enp0s3 inet static 
+	address 3.1.1.1
+	netmask 255.255.255.0
+iface enp0s3 inet6 static 
+	address 1::1
+	netmask 64
+auto enp0s8
+iface enp0s8 inet static 
+	address 2.2.2.2
+	netmask 255.255.255.0
+iface enp0s8 inet6 static 
+	address 2::2
+	netmask 64
+
+up route add -net 3::0/64 gw 2::1  // aggiunge un record nella tabella di route
+

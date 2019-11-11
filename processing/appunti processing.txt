@@ -1,0 +1,475 @@
+Per iniziare
+
+ogni programma (main) deve stare all'interno di una cartella con lo stesso nome 
+e all'interno della stessa cartella mettere i file che saranno necessari, es. immagini
+
+i commenti sono gli stessi di c++
+//commento su una riga
+/*commento su
+  più righe*/
+
+
+setup()
+viene eseguito all'inizio
+
+draw()
+viene eseguito in continuazione dopo il setup
+
+settings()
+serve principalmente per settare cose riguardanti la finestra
+ad esempio possiamo usarlo per settare la dimensioni della finestra con una variabile
+infatti non è possibile mettere delle variabili nel size in setup, in quanto possiamo mettere solo costanti, 
+è possibile aggirare il problema, ma non in setup, bensi in settings dove invece è possibile farlo
+
+background(colore)
+colora lo sfondo
+
+frameRate(numeroframe)
+setta il frameRate, ovvero la frequenza di aggiornamento
+
+size(dimX,dimY)
+setta le dimensioni della finestra
+
+fullScreen()
+lo possiamo usare per prendere la dimensione di tutta la finestra al posto di size
+
+random(x,y)
+restituisce un numero randomico nell'intervallo [x,y]
+
+color
+tipo dei colori
+se all'interno del color si usano numeri che vanno oltre l'intervallo [0,255] allora succedono cose strane, ma non da errore
+per creare un colore possiamo fare
+color(N) per un colore a scala di grigi
+color(R,G,B) per un colore normale
+
+dist(pos1X, pos1Y, pos2X , pos2Y)
+restituisce la distanza tra un punto e l'altro
+
+-------------------
+
+Disegni
+
+bisogna sempre stare attenti all'ordine di disegno per la sovrascrizione
+inoltre non possiamo più riferirci alle cose dopo averle disegnate, quindi scegliere le caratteristiche durante la loro definizione
+
+rect(posX,posY,dimX,dimY)
+disegna un rettangolo (la posizione dipende dal modo in cui si disegna)
+
+rectMode(modo)
+cambia il modo di disegnare il rettangolo
+i modi possono essere (sempre scritti in maiuscolo)
+CORNER è quello di default e disegna partendo dal vertice
+CENTER disegna partendo dal centro
+CORNERS disegna partendo dai vertici opposti
+
+
+
+point(posX,posY)
+disegna un punto nel punto desiderato
+
+
+
+ellipse().
+disegna un ellissi (può anche essere un cerchio se le dimensioni sono uguali)
+
+ellipseMode(modo)
+cambia il modo di disegnare l'ellisse
+i modi possono essere
+RADIUS fa in modo di disegnare usando il raggio
+CENTER modalità di default disegna partendo del centro
+CORNER usa un rettangolo e ci inscrive dentro un ellisse
+CORNERS usa un rettangolo in modo CORNERS e ci inscrive dentro un ellisse
+
+
+stroke(colore)
+setta il colore dei bordi
+
+strokeWeight(int)
+setta lo spessore dei bordi
+
+noStroke()
+toglie i bordi, di conseguenza uccide il punto
+
+fill(colore)
+riempie le figure disegnate successivamente
+se mettiamo un 4° parametro dopo il colore, allora stiamo indicando l'opacità dello sfondo
+se ad ogni ciclo viene sovrascritto da l'impressione della scia
+
+noFill()
+non riempie
+
+bezier(punto1,punto2,punto3,punto4)
+il primo e l'ultimo punto sono punti di ancoraggio, gli altri sono punti di controllo
+
+begingShape()
+inizia il disegno di un poligono con tot lati
+endShape() oppure endShape(CLOSE) 
+finisce il disegno del poligono se mettiamo close l'ultimo punto si collega al primo
+vertex(posX,posY)
+aggiunge un vertice al poligono
+bezierVertex(punto1,punto2,punto3)
+prende due punti di controllo e uno di ancoraggio
+
+----------------------
+
+TRIGGER MOUSE
+
+mousePressed
+se il tasto viene premuto (nell'if)
+
+mouseButton
+indica quale tasto del mouse è premuto
+i tasti sono
+LEFT	sinistro
+RIGHT	destro
+CENTER	rotellina
+si usa con if(mouseButton==tasto)
+
+mouseReleased()
+viene chiamato quando il mouse viene rilasciato
+
+mouseClicked()
+viene chiamato quando viene cliccato e rilasciato nello stesso punto
+
+mousePressed()
+viene chiamato quando viene premuto e basta, poi si riattiverà quando rilascerò il mouse e lo riclicco
+
+mouseWheel()
+viene chiamato quando interagisco con la rotellina
+
+mouseWheel(MouseEvent event)
+con event.getCount() capiamo se la rotellina va in basso (-1) o alto (+1)
+il tutto sta dentro un float o un int
+
+--------------------
+
+TRIGGER TASTIERA
+
+keyPressed()
+quando il tasto viene premuto
+si usa il key per i tasti normali
+si usa il keyCode per i tasti che non sono caratteri
+
+keyReleased()
+singolo rilascio dei tasti
+
+keyTyped()
+se viene premuto un tasto che è un carattere stampabile
+
+------------------------
+
+OPERAZIONI AFFINI
+
+translate(x,y)
+modifica la posizione dell'origine del piano
+
+rotate(angolo)
+ruota il piano con l'angolo espresso in radianti
+ruota in senso orario se il grado è positivo e antiorario se è negativo
+PI è la costante di pigreco
+se vogliamo convertire l'angolo in radianti allora usiamo radians(angolo) all'interno di rotate
+se invece di ruotare il piano vogliamo ruotare una figura dobbiamo
+- traslare il piano nel punto in cui vogliamo disegnare
+- ruotare il piano
+- disegnamo la figura nel punto (0,0)
+
+scale(x,y)
+scala il piano es. se usiamo (2,2) lo raddoppia
+
+shearX ruota l'asse X lasciando invariato l'asse Y
+shearY ruota l'asse Y lasciando invariato l'asse X
+
+pushMatrix() e popMatrix() 
+tutto quello che scriviamo dentro non intacca quello che sta fuori (si possono anche annidare)
+
+applyMatrix(matrice)
+trasformiamo in base una matrice che scriviamo manualmente noi
+Se si vuole fare una rototraslazione e si conoscono la matrice della rotazione e quella dell traslazione, 
+basta fare il prodotto riga colonna delle due matrici 3x3 ed eliminare la terza riga.
+
+----------------------------
+
+CLASSI
+
+classi
+le class si definiscono cosi
+class nome{}
+non ci sono nè ; alla fine, nè clausole di visibilità
+
+array
+gli array di oggetti 
+si dichiarano cosi		class[] istanza;
+si definiscono cosi		istanza=new classe[dim];
+per aggiungere un elemento si usa 	istanza[i]=new classe(parametri)
+
+
+
+ArrayList
+possiamo creare una struttura dinamica definita generamente(con i template) cosi
+dichiarazione 	ArrayList<classe> array;
+definizione 	array=new ArrayList<classe>();
+per aggiungere un nuovo elemento si usa istanza.add
+istanza.size() 		restituisce la dimensione dell'array
+istanza.get(i) 		restituisce l'elemento della posizione i
+for(classe var: istanza) 	è un for alternativo che li scorre tutti
+
+
+per estendere una classe bisogna scrivere cosi
+
+class figlia extends madre{
+
+figlia(parametri)
+{
+  super(parametri)//richiama il costruttore della classe madre
+}
+
+}
+
+
+
+---------------------------
+
+TESTO
+
+text(stringa, posX, posY)
+scrive il testo nella posizione desiderata
+
+con fill(colore) cambiamo il colore del testo
+
+textSize(dim)
+setta la dimensione del testo
+
+è possibile cambiare il font, ma non viene chiesto all'esame e si deve scaricare
+
+textAlign(allineamento)
+setta il come deve essere allineato il centro rispetto al punto d'origine
+gli allineamenti sono
+LEFT	sinistra
+RIGHT	destra
+CENTER	centro
+possiamo mettere anche un secondo allineamento per la y
+TOP 		il punto sta sopra il testo
+BOTTOM 		il punto sta sotto il testo
+CENTER 		il punto sta al centro del testo
+
+----------------------
+
+IMMAGINI
+
+PImage
+libreria per le immagini
+
+loadImage(immagine)
+carica l'immagine e la mette in una variabile
+
+imageMode(modo)
+cambia il modo in cui stampa l'immagine
+i modi sono
+CORNER 		parte dal vertice
+CENTER 		parte dal centro
+CORNERS 	parte dai vertici opposti
+
+image(immagine, posX, posY) // ed altri due eventuali, ovvero dimX, dimY
+stampa l'immagine
+
+immagine.resize(dimX,dimY)
+ridimensiona l'immagine
+
+immagine.filter(GRAY)
+imposta il filtro per l'immagine, in questo caso a scala di grigi
+
+immagine.save(nome.estensione)
+salva l'immagine che si vede col nome inserito nella cartella stessa
+se non mettiamo l'estensione di default è tif
+se ci sono problemi usare savePath cosi
+immagine.save(savePath(nome.estensione))
+save("finestra")
+salva la finestra come se fosse un immagine
+
+
+I.loadPixels()   		I=immagine
+mette i pixel in un array
+
+c=I.pixels[i]
+prende il colore dell'iesimo pixel nell'array
+ 
+come passare da posizione a pixel DX=y*I.width+x
+come passare da pixel a posizione
+     x=DX%I.width
+     y=DX/I.width
+	 
+	 
+I2=I1			non copia l'oggetto ma l'indirizzo
+quindi se modifico uno modifico anche l'altro, allora non va bene
+
+I2=I1.copy()
+copia l'oggetto
+
+I.pixels.length
+restituisce la lunghezza dell'array di pixel caricati con loadPixels
+
+I.updatePixels()
+per aggiornare i pixels, bisogna metterlo
+
+I=createImage(dimX,dimY,RGB)
+creiamo un immagine con dimensioni e colori
+
+I.set(x,y,c)
+setta il pixel al colore c
+set può settare un intera suttoimmagine dell'immagine stessa con
+I.set(x,y,sottoimmagine)
+
+c=color(x,y,255*(float(x*y)/(I.height*I.width)))
+crea un colore e se non mettiamo il float diventano tutti 0
+
+c=color(lerp(0,255,float(x)/J.width),lerp(0,255,float(y)/J.height),lerp(0,255,float(x*y)/(J.width*J.height)))
+la funzione lerp(a,b,k)
+prende k e lo normalizza in [a,b]
+    
+c=color(map(0,255,0,J.width,x),map(0,255,0,J.height,y),map(0,255,0,J.width*J.height,x*y));
+map rimappa un numero da un intervallo ad un altro
+sintassi
+map(value, start1, stop1, start2, stop2)
+
+c=I.get(posX,posY)
+prende il colore che sta nel pixel (posX,posY)
+subI=I.get(posX,posY,posX2,posY2)
+crea una sottoimmagine
+
+red(R.pixels[i])		quantità di rosso
+green(R.pixels[i])		quantità di verde
+blue(R.pixels[i])		quantità di blu
+
+-------------------
+
+BIT PLANES
+
+Per i bit planes bisogna scorrere ogni pixel e prenderne la quantità di colore (uno a caso dei tre)
+dopodichè shiftiamo k di n posti e facciamo l'AND con 1
+la sintassi di questa operazione è
+r=(k>>n)&1; 	dove 
+r è il l'n-esimo piano di bit (che alla fine dovrà essere moltiplicato per 255)
+n è il piano di bit che vogliamo analizzare
+k è la quantità di colore del pixel (è consigliato dichiararlo come int)
+
+con lo shift moltiplichiamo o dividiamo i byte per 2       
+<< shift verso sinistra   
+>> shift verso destra
+
+------------------
+
+QUANTIZZAZIONE
+
+
+
+
+
+-------------
+-------------
+
+
+lezione 1
+
+lezione è stato introdotto processing insieme alle principali caratteristiche del linguaggio. 
+Sono stati presentati i metodi principali, settings(), setup() e draw(), 
+i metodi background() e frameRate() 
+e i metodi per disegnare diverse primitive, ossia ellipse() e rect().
+
+Sono stati anche presentati i principali modificatori di disegno, fill(), 
+stroke(), ecc... e alcune variabili gestite da Processing per accedere ad alcune informazioni tra cui frameRate (diversa dalla funzione),  width, heigth, mouseX, mouse Y.
+
+Si è anche discusso del tipo color, del metodo color() e della gestione dei colori.
+
+lezione 2
+
+In questa lezione è stata completata la trattazione delle principali primitive di disegno, studiando i modificatori delle primitive begingShape() e bezier().
+
+E' stato anche trattato l'utilizzo della funzione text() per scrivere del testo nella finestra di disegno, insieme ai modificatori principali.
+In questa lezione sono state introdotte e spiegate le principali funzioni e variabili per gestire il rilevamento degli input da mouse e tastiera:
+
+Variabili mousePressed, keyPressed, mouseButton, key e keyCode.
+Funzioni mousePressed(), keyPressed(), mouseReleased(), keyReleased(), keyTyped(), mouseClicked(), mouseWheel().
+
+
+Nella cartella "altro" si trovano esempi simili a quelli visti a lezione
+
+lezione 3
+
+Nella lezione 3 sono state studiate le operazioni affini per il piano di disegno. Processing permette di di eseguire tali operazioni con le funzioni rotate(), scale(), shearX(), shearY(), translate() e applyMatrix(). 
+Tutte queste operazioni si applicano normalmente a tutto il piano di disegno, e quindi utilizzando come origine quelle di quest'ultimo.
+
+Per applicarle solo ad alcuni disegni sono state viste pushMatrix() e popMatrix(), inoltre è stato spiegato come sfruttare le trasformazioni per agire sui singoli disegni rispetto al loro centro.
+
+Nella seconda parte della lezione è stato fatto un brevissimo ripasso sui concetti più importanti della programmazione a oggetti. 
+E' stato poi spiegato come definire una classe in Processing e come istanziare degli oggetti. A tal fine è stata implementata una classe Ball, che rappresenta una palla che rimbalza simulando alcuni comportamenti fisici.
+
+E' stato pure mostrato come utilizzare gli array per gestire più oggetti.
+
+Si è parlato anche della trasparenza del colore.
+
+Nella cartella "altro" sono presenti sketch simili a quelli visti in aula o comunque basati sugli argomenti trattati
+
+lezione 4
+
+Nella lezione 4 è stato trattata l'ereditarietà delle classi. Come esempio è stata estesa la classe Ball prodotta nella scorsa lezione.
+
+Sono stati i metodi introdotti loop() e noLoop() per fermare e far ripartire il ciclo di draw rispettivamente. 
+
+E' stato visto come disegnare una curva di bezier utilizzando vertici interattivi. 
+
+Infine, per fissare meglio i concetti visti fino a questo punto del corso, è stato svolto un esercizio d'esame.
+
+Nella cartella "altro" sono presenti altre versioni del codice scritto in aula e altri sketch utili per esercitarsi.
+
+Sono stati caricati su Studium tutti i compiti d'esame passati con una possibile soluzione. Nella maggior parte dei casi, saranno presenti due esercizi. Solo uno dei due copre la parte di programma svolta finora.
+
+
+lezione 5
+
+Nella lezione 5 è stata introdotta la classe PImage, che si utilizza in Processing per la gestione delle immagini. 
+
+Sono state presentate le funzioni loadImage(), createImage(), save() e saveFrame() rispettivamente per caricare un'immagine da disco/server, 
+per crearne una nuova, per salvarla e per salvare il piano di disegno. Si è passato poi ai metodi get() e set() per leggere e scrivere un pixel, 
+insieme all'attributo pixels[] e ai metodi loadPixels() e updatePixels() e copy().
+
+Si è ripreso il metodo color() e il tipo color con esempi per estrarre le intensità dei canali R,G e B da un pixel usando red(), green() e blue().
+
+Si è parlato di lerp() e map(), ponendo un accento sulla normalizzazione lineare.
+
+Nella cartella altro sono presenti esempi simili a quelli visti a lezione e in più un esercizio in cui si usa lo spazio ARGB (cioè RGB con trasparenza, ossia canale alfa).
+
+lezione 6
+
+Nella lezione 06 sono stati implementati alcuni operatori puntuali: negativo, logaritmo e gamma. Si è focalizzata l'attenzione sulla costante di normalizzazione degli ultimi due, 
+importante per riportare i valori di intensità di grigio in un range valido [0, 255].
+
+E' stato poi implementato un metodo per la riquantizzazion uniforme dell'immagine a scala di grigi, concentrandosi sulla differenza tra livello di quantizzazione e colore associato.
+
+Si è poi passati ad un metodo per effettuare l'interpolazione replication con fattore x2 e due metodi per il calcolo di MSE e PSNR. 
+Questo ha permesso di valutare l'algoritmo di interpolazione di processing (PImage.resize()) con quello implementato da noi (replication).
+
+Infine è stato svolto uno esercizio in cui si utilizzano gli operatori locali implementati e si applicano solo a sottimmagini selezionate tramite mouse.
+
+
+lezione 7
+
+Nella lezione 07 sono state implementate le operazioni di stretching dell'istogramma e di equalizzazione. Oltre all'esempio visto a lezione, 
+è consigliato vedere gli esempi nella cartella "altro" in cui gli istogrammi vengono visualizzati con una funzione implementata per lo scopo.
+
+E' stato visto come implementare le operazioni affini per le immagini (rotazione, scaling, shear) tramite forward mapping e inverse mapping. 
+Il secondo caso richiede la conoscenza delle matrici inverse che, per le operazioni di scaling e rotazione, sono semplici da ricavare.
+
+Infine è stato visto come scomporre in bitplane un'immagine a 8 bit utilizzando le operazioni bitwise.
+
+
+lezione 8
+
+In questa lezione sono stati trattati principalmente gli operatori locali. Abbiamo distinto tra:
+
+1) Operatori locali di rango (mediano, massimo, minimo)
+2) Operatori locali invarianti per traslazione e lineari, applicati implementando la convoluzione.
+
+E' stata ripetuta più volte la differenza tra l'indicizzazione per gli oggetti PImage e quella per le matrici in Processing.In particolare le coordinate vanno invertite (I[i][j]==>I.get(j,i)).
+
+Infine è stato svolto un esercizio d'esame in cui serviva introdurre rumore sale e pepe e poi rimuoverlo tramite un filtro mediano su dominio RGB.

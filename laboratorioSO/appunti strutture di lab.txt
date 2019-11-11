@@ -1,0 +1,59 @@
+cose da fare con shared memory
+
+prima creare la shared memory
+shm_des = shmget(IPC_PRIVATE, sizeof(shm_msg) , IPC_CREAT | 0600)
+
+poi attacchiamo la parte da condividere alla memoria
+shared_list = (shm_msg *)shmat(shm_des, NULL, 0)
+
+creiamo l'array di semafori
+sem_des = semget(IPC_PRIVATE, num_sem, IPC_CREAT | 0600)
+
+settiamo i semafori
+semctl(sem_des, S_MUTEX, SETVAL, 1)
+
+trascrivere il WAIT e SIGNAL
+
+distruggere la parte di memoria condivisa
+shmctl(shm_des, IPC_RMID, NULL);
+
+distruggere l'array di semafori
+semctl(sem_des, 0, IPC_RMID, 0);
+
+---------------------------------------
+
+cose da fare con coda di messaggi
+
+creare la coda
+queue = msgget(IPC_PRIVATE, IPC_CREAT | 0600)
+
+mandare messaggi
+msgsnd(queue, &msg, sizeof(msg) - sizeof(quellochenonciserve), 0)
+
+ricevere messaggi
+msgrcv(queue, &in_message,sizeof(msg) - sizeof(quellochenonciserve)
+
+distruggere la coda
+msgctl(queue, IPC_RMID, NULL);
+
+---------------------------------------
+
+pipe
+
+chiudere sempre il canale che non si usa, e possibilmente mandare il solo canale che verrà utilizzato
+se non vengono chiuse potrebbero causare problemi
+
+alla fine è solo un contenitore con due porte, in una si scrive (1) e nell'altra si legge (0)
+
+si distrugge da sola
+------------------------
+
+fifo
+
+mkfifo(fifo_pathname, 0600)
+
+non si apre e chiude niente
+
+non si distrugge da sola
+
+al massimo bisogna fare unlink(pathname)

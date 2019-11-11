@@ -1,0 +1,29 @@
+// Classe con il main che usa il Context
+public class Client {
+	private static Biglietto b = new Biglietto();
+	public static void main(String[] args) {
+		usaBiglietto();
+	}
+
+	private static void usaBiglietto() {
+		b.prenota("Mario Tokoro");
+		b.compra();
+		b.mostra();
+	}
+		
+	private static void nonUsaOk() {
+		b.compra();
+		b.cancella();
+		b.prenota("Mario Biondi");
+	}
+}
+/*
+Output dell'esecuzione
+
+DISP Cambia stato da Disponibile a Bloccato
+BLOC Inserito nuovo intestatario
+BLOC Cambia stato da Bloccato a Venduto
+VEND Pagamento effettuato
+Prezzo: 100  codice: XYZ
+VEND Nome: Mario Tokoro
+*/
